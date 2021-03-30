@@ -178,8 +178,6 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
     @Autowired
     protected Form optionalAttributeForm;
     @Autowired
-    protected LinkButton constraintWizardField;
-    @Autowired
     protected ComboBox<AttributeType> dataTypeField;
     @Autowired
     protected ComboBox<String> entityClassField;
@@ -347,6 +345,7 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
         targetScreensDc.getMutableItems().add(metadata.create(TargetScreenComponent.class));
     }
 
+    /* todo: filter support
     @Subscribe("constraintWizardField")
     protected void onConstraintWizardFieldClick(Button.ClickEvent event) {
         CategoryAttribute attribute = getEditedEntity();
@@ -359,7 +358,7 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
             return;
         }
 
-        /* todo: filter support
+
         MetaClass metaClass = metadata.getClass(entityClass);
         FakeFilterSupport filterSupport = new FakeFilterSupport(this, metaClass);
         Filter fakeFilter = filterSupport.createFakeFilter();
@@ -393,8 +392,8 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
                 }
                 attribute.setFilterXml(filterEntity.getXml());
             }
-        });*/
-    }
+        });
+    }*/
 
     @Install(to = "dependsOnAttributesField", subject = "validator")
     protected void dependsOnAttributesFieldValidator(Collection<CategoryAttribute> categoryAttributes) {
@@ -595,7 +594,7 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
         boolean jpqlLoaderVisible = optionsType == JPQL;
         joinClauseField.setVisible(jpqlLoaderVisible);
         whereClauseField.setVisible(jpqlLoaderVisible);
-        constraintWizardField.setVisible(jpqlLoaderVisible);
+//        constraintWizardField.setVisible(jpqlLoaderVisible);
 
         boolean scriptLoaderVisible = optionsType == SQL
                 || optionsType == GROOVY;
