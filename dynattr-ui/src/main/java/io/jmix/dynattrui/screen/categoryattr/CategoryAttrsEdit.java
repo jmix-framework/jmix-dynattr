@@ -345,56 +345,6 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
         targetScreensDc.getMutableItems().add(metadata.create(TargetScreenComponent.class));
     }
 
-    /* todo: filter support
-    @Subscribe("constraintWizardField")
-    protected void onConstraintWizardFieldClick(Button.ClickEvent event) {
-        CategoryAttribute attribute = getEditedEntity();
-        Class<?> entityClass = attribute.getJavaType();
-
-        if (entityClass == null) {
-            notifications.create()
-                    .withCaption(messages.getMessage(CategoryAttrsEdit.class, "selectEntityType"))
-                    .show();
-            return;
-        }
-
-
-        MetaClass metaClass = metadata.getClass(entityClass);
-        FakeFilterSupport filterSupport = new FakeFilterSupport(this, metaClass);
-        Filter fakeFilter = filterSupport.createFakeFilter();
-        FilterEntity filterEntity = filterSupport.createFakeFilterEntity(attribute.getFilterXml());
-        ConditionsTree conditionsTree = filterSupport.createFakeConditionsTree(fakeFilter, filterEntity);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("filter", fakeFilter);
-        params.put("filterEntity", filterEntity);
-        params.put("conditionsTree", conditionsTree);
-        params.put("useShortConditionForm", true);
-
-        FilterEditor filterEditor = (FilterEditor) openWindow("filterEditor", OpenType.DIALOG, params);
-        filterEditor.addCloseListener(actionId -> {
-            if (!COMMIT_ACTION_ID.equals(actionId)) {
-                return;
-            }
-
-            filterEntity.setXml(filterParser.getXml(filterEditor.getConditions(), Param.ValueProperty.DEFAULT_VALUE));
-
-            if (filterEntity.getXml() != null) {
-                Element element = dom4JTools.readDocument(filterEntity.getXml()).getRootElement();
-                com.haulmont.cuba.core.global.filter.FilterParser filterParser =
-                        new com.haulmont.cuba.core.global.filter.FilterParser(element);
-                String jpql = new SecurityJpqlGenerator().generateJpql(filterParser.getRoot());
-                attribute.setWhereClause(jpql);
-                Set<String> joins = filterParser.getRoot().getJoins();
-                if (!joins.isEmpty()) {
-                    String joinsStr = new TextStringBuilder().appendWithSeparators(joins, " ").toString();
-                    attribute.setJoinClause(joinsStr);
-                }
-                attribute.setFilterXml(filterEntity.getXml());
-            }
-        });
-    }*/
-
     @Install(to = "dependsOnAttributesField", subject = "validator")
     protected void dependsOnAttributesFieldValidator(Collection<CategoryAttribute> categoryAttributes) {
         if (recalculationScriptField.getValue() != null
@@ -594,7 +544,6 @@ public class CategoryAttrsEdit extends StandardEditor<CategoryAttribute> {
         boolean jpqlLoaderVisible = optionsType == JPQL;
         joinClauseField.setVisible(jpqlLoaderVisible);
         whereClauseField.setVisible(jpqlLoaderVisible);
-//        constraintWizardField.setVisible(jpqlLoaderVisible);
 
         boolean scriptLoaderVisible = optionsType == SQL
                 || optionsType == GROOVY;
