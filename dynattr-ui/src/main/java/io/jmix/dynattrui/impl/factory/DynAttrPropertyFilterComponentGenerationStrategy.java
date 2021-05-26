@@ -155,7 +155,6 @@ public class DynAttrPropertyFilterComponentGenerationStrategy extends DynAttrCom
         ValuePicker<BaseDateInterval> valuePicker = uiComponents.create(ValuePicker.NAME);
         valuePicker.addAction(actions.create(DateIntervalAction.ID));
         valuePicker.addAction(actions.create(ValueClearAction.ID));
-        valuePicker.setFormatter(interval -> dateIntervalUtils.getLocalizedValue(interval));
         return valuePicker;
     }
 
